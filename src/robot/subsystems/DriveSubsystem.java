@@ -20,35 +20,43 @@
 package robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import robotCore.Device;
 import robotCore.Encoder;
 import robotCore.Logger;
 import robotCore.PWMMotor;
 import robotCore.Encoder.EncoderType;
+import static robot.Constants.DrivetrainConstants.*;
 
 public class DriveSubsystem extends SubsystemBase {
+  private static DriveSubsystem drive;
 
-  //TODO move the pins to the Constants class
-  //TODO don't forget to change name and import!
-  public final static double  k_ticksPerFoot = 7059.2 / 5.85;
-
-  private static final int k_leftMotorPWMPin = Device.M1_1_PWM;
-  private static final int k_leftMotorDirPin = Device.M1_1_DIR;
-  private static final int k_rightMotorPWMPin = Device.M1_2_PWM;
-  private static final int k_rightMotorDirPin = Device.M1_2_DIR;
-  private static final int k_leftEncoderIntPin = Device.Q1_INT;
-  private static final int k_leftEncoderDirPin = Device.Q1_DIR;
-  private static final int k_rightEncoderIntPin = Device.Q2_INT;
-  private static final int k_rightEncoderDirPin = Device.Q2_DIR;
-  
-  //TODO create motor and encoder objects using PWMMotor.class and Encoder.class
-
+  //Creates objects for both motors and encoders
+  private PWMMotor m_leftMotor, m_rightMotor;
+  private Encoder m_leftEncoder, m_rightEncoder;
 
   public DriveSubsystem() {
     Logger.log("DriveSubsystem", 3, "DriveSubsystem()");
 
-    // TODO Invert the left motor encoder
-  
+    configMotors();
+    configEncoders();
+    m_leftEncoder.setInverted(true); //inverts left encoder
+  }
+
+    //If there is no instance, create a new instance
+    public static synchronized DriveSubsystem getInstance(){
+      if (drive == null) {
+          drive = new DriveSubsystem();
+      }
+      return drive;
+    }
+
+  private void configMotors(){
+    m_leftMotor = new PWMMotor(k_leftMotorPWMPin, k_leftMotorDirPin);
+    new PWMMotor(k_rightMotorPWMPin, k_rightMotorDirPin);
+  }
+
+  private void configEncoders(){
+    m_leftEncoder = new Encoder(EncoderType.Quadrature, k_leftEncoderIntPin, k_leftEncoderDirPin);
+    m_rightEncoder = new Encoder(EncoderType.Quadrature, k_rightEncoderIntPin, k_rightEncoderDirPin);
   }
 
   @Override
@@ -57,7 +65,17 @@ public class DriveSubsystem extends SubsystemBase {
     Logger.log("DriveSubsystem", -1, "periodic()");
   }
 
-  // TODO create one method to set power to both motors
+  //sets power of both motors
+  public void setPower(double leftPower, double rightPower){
+    m_leftMotor.set(leftPower);
+    m_rightMotor.set(rightPower);
+  }
 
-  // TODO creat two methods to get left and right encoders
+  //methods to get left and right encoders
+  public int getLeftEncoder(){
+    return (m_leftEncoder.get());
+  }
+  public int getRightEncoder(){
+    return (m_rightEncoder.get());
+  }
 }

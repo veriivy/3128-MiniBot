@@ -27,6 +27,11 @@ import robot.subsystems.ShooterSubsystem;
 import robot.subsystems.TurntableSubsystem;
 import robotCore.Joystick;
 
+import robot.commands.CmdFeedAndShoot;
+import robot.commands.CmdTurnTurret;
+import robot.commands.CmdTurnTurretBack;
+import robot.commands.CmdArcadeDrive;
+
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -35,25 +40,41 @@ import robotCore.Joystick;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final Joystick m_joystick = new Joystick(0);
-  private final JoystickButton m_button1 = new JoystickButton(m_joystick, 1);
-  // TODO create more buttons
+  private Joystick m_joystick;
+  private JoystickButton m_b1, m_b2, m_b3;
 
+  private ShooterSubsystem m_shooter;
+  private DriveSubsystem m_drive;
+  private FeederSubsystem m_feed;
+  private TurntableSubsystem m_turn;
 
-  // TODO create subsystems objects
+  // Defines Subsystems and Commands
 
+  public void configJoyStick(){
+  //creating objects for each joystick button
+    m_joystick = new Joystick(0);
+    m_b1 = new JoystickButton(m_joystick, 1);
+    m_b2 = new JoystickButton(m_joystick, 2);
+    m_b3 = new JoystickButton(m_joystick, 3);
+  }
 
-
+  public void configSubsystem(){
+  //creating objects for each subsystem
+    m_drive = DriveSubsystem.getInstance();
+    m_shooter = ShooterSubsystem.getInstance();
+    m_feed = FeederSubsystem.getInstance();
+    m_turn = TurntableSubsystem.getInstance();
+  }
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
+    configJoyStick();
+    configSubsystem();
     configureButtonBindings();
 
     //TODO this line assigns drive command as the default command
-    //m_driveSubsystem.setDefaultCommand(new ArcadeDriveCommand(m_driveSubsystem, m_joystick));
+    //m_drive.setDefaultCommand(new CmdArcadeDrive(m_drive, m_joystick));
   }
 
   /**
@@ -63,8 +84,10 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // TODO assign commands to the buttons you just created
-
+    // assigns commands to buttons
+    m_b1.whileHeld(new CmdFeedAndShoot());
+    m_b2.whileHeld(new CmdTurnTurret());
+    m_b3.whileHeld(new CmdTurnTurretBack());
   }
 
   /**

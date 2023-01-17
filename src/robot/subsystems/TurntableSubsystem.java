@@ -19,24 +19,39 @@
 package robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import robotCore.Device;
 import robotCore.Encoder;
 import robotCore.Logger;
 import robotCore.PWMMotor;
 import robotCore.Encoder.EncoderType;
+import static robot.Constants.TurnTableConstants.*;
 
-/**
- *
- */
+
 public class TurntableSubsystem extends SubsystemBase {
-	private static final int k_PWMPin = Device.M3_1_PWM;
-	private static final int k_DirPin = Device.M3_1_DIR;
-	private static final int k_encoderIntPin = Device.Q3_INT;
-	private static final int k_encoderDirPin = Device.Q3_DIR;
+	private static TurntableSubsystem turn;
+	
 
-	// TODO you know what to do
+	private PWMMotor m_motor;
+	private Encoder m_encoder;
+
+	public static synchronized TurntableSubsystem getInstance(){
+		if (turn == null) {
+			turn = new TurntableSubsystem();
+		}
+		return turn;
+	  }
+
+	public void setPower(double power){
+		m_motor.set(power);
+	}
+	public int getEncoder(){
+		return (m_encoder.get());
+	}
+
 	public TurntableSubsystem() {
 		Logger.log("TurntableSubsystem", 2, "TurntableSubsystem()");
+
+		m_motor = new PWMMotor(k_PWMPin, k_DirPin);
+		m_encoder = new Encoder(EncoderType.Quadrature, k_encoderIntPin, k_encoderDirPin);
 	}
 
 	public void initDefaultCommand() {

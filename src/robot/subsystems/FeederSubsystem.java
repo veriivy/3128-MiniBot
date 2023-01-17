@@ -18,32 +18,44 @@
 package robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import robotCore.Device;
 import robotCore.Encoder;
 import robotCore.Encoder.EncoderType;
 import robotCore.Logger;
 import robotCore.PWMMotor;
+import static robot.Constants.FeederConstants.*;
 
-/**
- *
- */
+
 public class FeederSubsystem extends SubsystemBase {
-	private static final int k_PWMPin = Device.M2_1_PWM;
-	private static final int k_DirPin = Device.M2_1_DIR;
-	private static final int k_encPin1 = Device.Q4_INT;
-	private static final int k_encPin2 = -1;
+	private static FeederSubsystem feed;
 
-	// TODO create motor and encoder objects
+	private PWMMotor m_motor;
+	private Encoder m_encoder;
 
 	public FeederSubsystem() {
 		Logger.log("FeederSubsystem", 2, "Constructor");
+
+		m_motor = new PWMMotor(k_PWMPin, k_DirPin);
+		m_encoder = new Encoder(EncoderType.Quadrature, k_encPin1, k_encPin2);
 	}
+
+	public static synchronized FeederSubsystem getInstance(){
+		if (feed == null) {
+			feed = new FeederSubsystem();
+		}
+		return feed;
+	  }
 
 	public void initDefaultCommand() {
 		Logger.log("FeederSubsystem", 2, "initDefaultCommand()");
 	}
 
-	// TODO Create methods to set motor power and get encoder
+
+	public void setPower(double power){
+		m_motor.set(power);
+	}
+	public int getEncoder(){
+		return (m_encoder.get());
+	}
 
 	@Override
 	public void periodic() {
