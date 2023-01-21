@@ -51,7 +51,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   private void configMotors(){
     m_leftMotor = new PWMMotor(k_leftMotorPWMPin, k_leftMotorDirPin);
-    new PWMMotor(k_rightMotorPWMPin, k_rightMotorDirPin);
+    m_rightMotor = new PWMMotor(k_rightMotorPWMPin, k_rightMotorDirPin);
   }
 
   private void configEncoders(){

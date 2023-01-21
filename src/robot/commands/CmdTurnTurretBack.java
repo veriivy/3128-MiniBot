@@ -4,7 +4,7 @@ import robot.subsystems.TurntableSubsystem;
 
 public class CmdTurnTurretBack extends CommandBase {
     private TurntableSubsystem m_turnTurretBack;
-    private double power = -0.6;
+    private double power = -0.9;
 
     public CmdTurnTurretBack() {
         m_turnTurretBack = TurntableSubsystem.getInstance();

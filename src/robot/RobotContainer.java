@@ -84,7 +84,8 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // assigns commands to buttons
+    // assigns commands to buttons 
+    // TODO change buttons
     m_b1.whileHeld(new CmdFeedAndShoot());
     m_b2.whileHeld(new CmdTurnTurret());
     m_b3.whileHeld(new CmdTurnTurretBack());

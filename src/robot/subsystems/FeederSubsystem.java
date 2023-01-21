@@ -30,6 +30,7 @@ public class FeederSubsystem extends SubsystemBase {
 
 	private PWMMotor m_motor;
 	private Encoder m_encoder;
+	private int speed;
 
 	public FeederSubsystem() {
 		Logger.log("FeederSubsystem", 2, "Constructor");
@@ -55,6 +56,12 @@ public class FeederSubsystem extends SubsystemBase {
 	}
 	public int getEncoder(){
 		return (m_encoder.get());
+	}
+
+	public int getSpeed(){
+		speed = m_encoder.getSpeed();
+		return speed;
+		
 	}
 
 	@Override
