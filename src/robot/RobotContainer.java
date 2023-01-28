@@ -74,7 +74,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     //TODO this line assigns drive command as the default command
-    //m_drive.setDefaultCommand(new CmdArcadeDrive(m_drive, m_joystick));
+    m_drive.setDefaultCommand(new CmdArcadeDrive(m_joystick));
   }
 
   /**
