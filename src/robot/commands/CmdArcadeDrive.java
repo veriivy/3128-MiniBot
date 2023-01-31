@@ -6,11 +6,12 @@ import robotCore.Joystick;
 
 public class CmdArcadeDrive extends CommandBase {
     private DriveSubsystem m_drive;
-    Joystick m_joystick;
+    private Joystick m_joystick;
 
     public CmdArcadeDrive(Joystick joystick) {
         m_drive = DriveSubsystem.getInstance();
         m_joystick = joystick;
+
         addRequirements(m_drive);
     }
 
@@ -21,12 +22,16 @@ public class CmdArcadeDrive extends CommandBase {
 
     @Override 
     public void execute(){
-        // forward Y negative, left Y negative
+        //forward Y negative, left Y negative
         if (m_joystick.getX() <= 0) {
-            m_drive.setPower(-(m_joystick.getY() * 0.6), -(m_joystick.getY() * 0.6 + Math.abs(m_joystick.getX()) * 0.2));
+            m_drive.setPower((m_joystick.getY() * 0.75), (m_joystick.getY() * 0.75 + Math.abs(m_joystick.getX()) * 0.25));
         } else {
-            m_drive.setPower(-(m_joystick.getY() * 0.6 + Math.abs(m_joystick.getX()) * 0.2), -(m_joystick.getY() * 0.6));
+            m_drive.setPower((m_joystick.getY() * 0.75 + Math.abs(m_joystick.getX()) * 0.25), (m_joystick.getY() * 0.75));
         }
+        // double filteredX = m_joystick.getX() * Math.abs(m_joystick.getX()) * 0.5;
+        // double filteredY = m_joystick.getY() * Math.abs(m_joystick.getY());
+        // m_drive.setPower(filteredY + filteredX, filteredY - filteredX);
+
     }
 
     @Override
