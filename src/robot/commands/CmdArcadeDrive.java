@@ -12,7 +12,6 @@ import java.lang.String;
 
 public class CmdArcadeDrive extends CommandBase {
     private DriveSubsystem m_drive;
-    private double power = 0.6;
     private Joystick m_joystick;
 
     public CmdArcadeDrive(Joystick joystick) {
@@ -30,9 +29,7 @@ public class CmdArcadeDrive extends CommandBase {
 
     @Override 
     public void execute(){
-    
         m_drive.setPower(m_joystick.getY() + m_joystick.getX() , m_joystick.getY() - m_joystick.getX());
-
     }
 
     @Override
