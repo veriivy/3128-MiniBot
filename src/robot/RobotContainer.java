@@ -29,8 +29,9 @@ import robotCore.Joystick;
 
 import robot.commands.CmdFeedAndShoot;
 import robot.commands.CmdTurnTurret;
-import robot.commands.CmdTurnTurretBack;
 import robot.commands.CmdArcadeDrive;
+import robot.commands.CmdFeed;
+import robot.commands.CmdShoot;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -41,7 +42,7 @@ import robot.commands.CmdArcadeDrive;
  */
 public class RobotContainer {
   private Joystick m_joystick;
-  private JoystickButton m_b1, m_b2, m_b3;
+  private JoystickButton m_b1, m_b2, m_b3, m_b4, m_b5, m_b6;
 
   private ShooterSubsystem m_shooter;
   private DriveSubsystem m_drive;
@@ -56,6 +57,9 @@ public class RobotContainer {
     m_b1 = new JoystickButton(m_joystick, 1);
     m_b2 = new JoystickButton(m_joystick, 2);
     m_b3 = new JoystickButton(m_joystick, 3);
+    m_b4 = new JoystickButton(m_joystick, 4);
+    m_b5 = new JoystickButton(m_joystick, 5);
+    m_b6 = new JoystickButton(m_joystick, 6);
   }
 
   public void configSubsystem(){
@@ -74,7 +78,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     //TODO this line assigns drive command as the default command
-    //m_drive.setDefaultCommand(new CmdArcadeDrive(m_drive, m_joystick));
+    m_drive.setDefaultCommand(new CmdArcadeDrive(m_joystick));
   }
 
   /**
@@ -87,8 +91,10 @@ public class RobotContainer {
     // assigns commands to buttons 
     // TODO change buttons
     m_b1.whileHeld(new CmdFeedAndShoot());
-    m_b2.whileHeld(new CmdTurnTurret());
-    m_b3.whileHeld(new CmdTurnTurretBack());
+    m_b3.whileHeld(new CmdFeed());
+    m_b4.whileHeld(new CmdShoot());
+    m_b5.whileHeld(new CmdTurnTurret(-0.9));
+    m_b6.whileHeld(new CmdTurnTurret(0.9));
   }
 
   /**
