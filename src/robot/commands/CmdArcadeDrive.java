@@ -3,6 +3,12 @@ package robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import robot.subsystems.DriveSubsystem;
 import robotCore.Joystick;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.tools.ForwardingFileObject;
+
+import java.lang.String;
 
 public class CmdArcadeDrive extends CommandBase {
     private DriveSubsystem m_drive;
@@ -10,28 +16,20 @@ public class CmdArcadeDrive extends CommandBase {
 
     public CmdArcadeDrive(Joystick joystick) {
         m_drive = DriveSubsystem.getInstance();
+
         m_joystick = joystick;
 
         addRequirements(m_drive);
     }
-
+    
     @Override 
     public void initialize(){
-    
+
     }
 
     @Override 
     public void execute(){
-        //forward Y negative, left Y negative
-        if (m_joystick.getX() <= 0) {
-            m_drive.setPower((m_joystick.getY() * 0.75), (m_joystick.getY() * 0.75 + Math.abs(m_joystick.getX()) * 0.25));
-        } else {
-            m_drive.setPower((m_joystick.getY() * 0.75 + Math.abs(m_joystick.getX()) * 0.25), (m_joystick.getY() * 0.75));
-        }
-        // double filteredX = m_joystick.getX() * Math.abs(m_joystick.getX()) * 0.5;
-        // double filteredY = m_joystick.getY() * Math.abs(m_joystick.getY());
-        // m_drive.setPower(filteredY + filteredX, filteredY - filteredX);
-
+        m_drive.setPower(m_joystick.getY() + m_joystick.getX() , m_joystick.getY() - m_joystick.getX());
     }
 
     @Override

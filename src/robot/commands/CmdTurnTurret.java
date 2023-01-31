@@ -5,10 +5,11 @@ import robot.subsystems.TurntableSubsystem;
 
 public class CmdTurnTurret extends CommandBase {
     private TurntableSubsystem m_turnTurret;
-    private double power = 0.9;
+    private double power;
 
-    public CmdTurnTurret() {
+    public CmdTurnTurret(double p) {
         m_turnTurret = TurntableSubsystem.getInstance();
+        power = p;
         
         addRequirements(m_turnTurret);
     }

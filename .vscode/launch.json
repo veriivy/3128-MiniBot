@@ -12,17 +12,17 @@
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-Main<NerfBotTemplate>",
+            "name": "Debug (Launch)-Main<3128-MiniBot-2023>",
             "request": "launch",
             "mainClass": "robot.Main",
-            "projectName": "NerfBotTemplate"
+            "projectName": "3128-MiniBot-2023"
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-Launch<NerfBotTemplate>",
+            "name": "Debug (Launch)-Launch<3128-MiniBot-2023>",
             "request": "launch",
             "mainClass": "robotCore.Launch",
-            "projectName": "NerfBotTemplate",
+            "projectName": "3128-MiniBot-2023",
             "args": "172.24.1.1:8999 robot.Main --"
         }
     ]
